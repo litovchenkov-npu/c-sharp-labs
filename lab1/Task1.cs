@@ -1,131 +1,59 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Task1
+public class Grade
 {
-    public class Country
+    public string Subject { get; set; }
+    public double Score { get; set; }
+
+    public Grade(string subject, double score)
     {
-        public string Name { get; set; }
-
-        public Country(string name)
-        {
-            Name = name;
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        Subject = subject;
+        Score = score;
     }
 
-    public class City
+    public void DisplayGrade()
     {
-        public string Name { get; set; }
-        public Country Country { get; set; }
+        Console.WriteLine($"Subject: {Subject}, Score: {Score}");
+    }
+}
 
-        public City(string name, Country country)
-        {
-            Name = name;
-            Country = country;
-        }
+public class Student
+{
+    public string Name { get; set; }
+    public List<Grade> Grades { get; set; }
 
-        public override string ToString()
-        {
-            return $"{Name}, {Country}";
-        }
+    public Student(string name)
+    {
+        Name = name;
+        Grades = new List<Grade>();
     }
 
-    public class Region
+    public void AddGrade(Grade grade)
     {
-        public string Name { get; set; }
-        public List<City> Cities { get; set; }
-
-        public Region(string name)
-        {
-            Name = name;
-            Cities = new List<City>();
-        }
-
-        public void AddCity(City city)
-        {
-            Cities.Add(city);
-        }
-
-        public List<City> SearchByCityName(string cityName)
-        {
-            return Cities.Where(city => city.Name.Contains(cityName, StringComparison.OrdinalIgnoreCase)).ToList();
-        }
-
-        public List<City> SearchByCountryName(string countryName)
-        {
-            return Cities.Where(city => city.Country.Name.Contains(countryName, StringComparison.OrdinalIgnoreCase)).ToList();
-        }
+        Grades.Add(grade);
     }
 
-    class Program
+    public void DisplayStudentInfo()
     {
-        static void Main(string[] args)
+        Console.WriteLine($"Name: {Name}");
+        Console.WriteLine("Grades:");
+        foreach (var grade in Grades)
         {
-            Country ukraine = new Country("Ukraine");
-            Country usa = new Country("USA");
-
-            Region myRegion = new Region("Central Region");
-
-            myRegion.AddCity(new City("Kyiv", ukraine));
-            myRegion.AddCity(new City("Lviv", ukraine));
-            myRegion.AddCity(new City("New York", usa));
-            myRegion.AddCity(new City("Los Angeles", usa));
-            myRegion.AddCity(new City("Kharkiv", ukraine));
-
-            Console.WriteLine("Search for a city by name or country.");
-            Console.WriteLine("1. Search by city name");
-            Console.WriteLine("2. Search by country name");
-            Console.WriteLine("Select an option: ");
-            string option = Console.ReadLine();
-
-            if (option == "1")
-            {
-                Console.Write("Enter a city name: ");
-                string cityName = Console.ReadLine();
-                var results = myRegion.SearchByCityName(cityName);
-
-                if (results.Count > 0)
-                {
-                    Console.WriteLine("Found cities:");
-                    foreach (var city in results)
-                    {
-                        Console.WriteLine(city);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("City not found.");
-                }
-            }
-            else if (option == "2")
-            {
-                Console.Write("Enter the country name: ");
-                string countryName = Console.ReadLine();
-                var results = myRegion.SearchByCountryName(countryName);
-
-                if (results.Count > 0)
-                {
-                    Console.WriteLine("Cities found:");
-                    foreach (var city in results)
-                    {
-                        Console.WriteLine(city);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("City not found in this country.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid input.");
-            }
+            grade.DisplayGrade();
         }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Student student = new Student("John Doe");
+
+        student.AddGrade(new Grade("Maths", 95));
+        student.AddGrade(new Grade("Physics", 88));
+
+        student.DisplayStudentInfo();
     }
 }

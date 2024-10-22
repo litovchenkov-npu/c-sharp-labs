@@ -1,79 +1,25 @@
 using System;
 
-namespace Task5
+public class User
 {
-    class Program
+    public string Username { get; set; }
+    public string Password { get; set; }
+
+    public User(string username, string password)
     {
-        static void Main()
-        {
-            int[,] array = {
-                { 1, 2, 3, 4, 5 },
-                { 6, 7, 8, 9, 10 },
-                { 11, 12, 13, 14, 15 }
-            };
+        Username = username;
+        Password = password;
+    }
+}
 
-            Console.WriteLine("2D array:");
-            Print2DArray(array);
+public class Program
+{
+    public static void Main()
+    {
+        User user1 = new User("john_doe", "4%Rpk16~aL/bCWp:");
+        User user2 = new User("jane_smith", "DtE-851]y0xc21Mj");
 
-            int[][] jaggedArray = new int[array.GetLength(0)][];
-
-            for (int i = 0; i < array.GetLength(0); i++)
-            {
-                int[] evenNumbers = GetEvenNumbers(array, i);
-                jaggedArray[i] = evenNumbers;
-            }
-
-            Console.WriteLine("Jagged array:");
-            PrintJaggedArray(jaggedArray);
-        }
-
-        static int[] GetEvenNumbers(int[,] array, int rowIndex)
-        {
-            int count = 0;
-
-            for (int j = 0; j < array.GetLength(1); j++)
-            {
-                if (array[rowIndex, j] % 2 == 0)
-                    count++;
-            }
-
-            int[] evenNumbers = new int[count];
-            int index = 0;
-
-            for (int j = 0; j < array.GetLength(1); j++)
-            {
-                if (array[rowIndex, j] % 2 == 0)
-                {
-                    evenNumbers[index] = array[rowIndex, j];
-                    index++;
-                }
-            }
-
-            return evenNumbers;
-        }
-
-        static void Print2DArray(int[,] array)
-        {
-            for (int i = 0; i < array.GetLength(0); i++)
-            {
-                for (int j = 0; j < array.GetLength(1); j++)
-                {
-                    Console.Write(array[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
-        }
-
-        static void PrintJaggedArray(int[][] jaggedArray)
-        {
-            for (int i = 0; i < jaggedArray.Length; i++)
-            {
-                for (int j = 0; j < jaggedArray[i].Length; j++)
-                {
-                    Console.Write(jaggedArray[i][j] + "\t");
-                }
-                Console.WriteLine();
-            }
-        }
+        Console.WriteLine($"User 1: Username = {user1.Username}, Password = {user1.Password}");
+        Console.WriteLine($"User 2: Username = {user2.Username}, Password = {user2.Password}");
     }
 }

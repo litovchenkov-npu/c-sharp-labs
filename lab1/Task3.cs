@@ -1,39 +1,35 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Task3
+public class Point3D
 {
-    class Program
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double Z { get; set; }
+
+    public Point3D(double x, double y, double z)
     {
-        static void Main(string[] args)
-        {
-            static void CalculateGCD(ref int a, ref int b)
-            {
-                while (b != 0)
-                {
-                    int temp = b;
-                    b = a % b;
-                    a = temp;
-                }
-            }
+        X = x;
+        Y = y;
+        Z = z;
+    }
 
-            int a = 56, b = 98;
-            Console.WriteLine($"Values: a = {a}, b = {b}");
-            CalculateGCD(ref a, ref b);
-            Console.WriteLine($"GCD: {a}");
+    public double DistanceTo(Point3D other)
+    {
+        return Math.Sqrt(Math.Pow(X - other.X, 2) + Math.Pow(Y - other.Y, 2) + Math.Pow(Z - other.Z, 2));
+    }
+}
 
-            a = 270;
-            b = 192;
-            Console.WriteLine($"\nValues: a = {a}, b = {b}");
-            CalculateGCD(ref a, ref b);
-            Console.WriteLine($"GCD: {a}");
+public class Program
+{
+    public static void Main()
+    {
+        Point3D point1 = new Point3D(1.0, 2.0, 3.0);
+        Point3D point2 = new Point3D(4.0, 6.0, 8.0);
 
-            a = 48;
-            b = 18;
-            Console.WriteLine($"\nValues: a = {a}, b = {b}");
-            CalculateGCD(ref a, ref b);
-            Console.WriteLine($"GCD: {a}");
-        }
+        Console.WriteLine($"Point 1: ({point1.X}, {point1.Y}, {point1.Z})");
+        Console.WriteLine($"Point 2: ({point2.X}, {point2.Y}, {point2.Z})");
+
+        double distance = point1.DistanceTo(point2);
+        Console.WriteLine($"Distance between Point 1 and Point 2: {distance:F2}");
     }
 }
